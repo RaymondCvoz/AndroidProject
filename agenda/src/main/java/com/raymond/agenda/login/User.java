@@ -2,9 +2,14 @@ package com.raymond.agenda.login;
 
 public class User
 {
-    private String email;
+    private String username;
     private String password;
 
+    User(String username,String password)
+    {
+        this.username = username;
+        this.password = password;
+    }
     public String getPassword()
     {
         return password;
@@ -15,13 +20,13 @@ public class User
         this.password = password;
     }
 
-    public String getEmail()
+    public String getUsername()
     {
-        return email;
+        return username;
     }
 
-    public void setEmail(String email)
+    public void setUsername(String username)
     {
-        this.email = email;
+        this.username = username;
     }
 }

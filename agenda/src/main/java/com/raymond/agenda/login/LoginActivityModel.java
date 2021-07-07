@@ -5,14 +5,12 @@ import androidx.lifecycle.ViewModel;
 
 public class LoginActivityModel extends ViewModel
 {
-    String email;
-    String password;
     MutableLiveData<LoginStatus> loginFormStatusMutableLiveData;
     public MutableLiveData<LoginStatus> getLoginFormStatusMutableLiveData()
     {
         if(loginFormStatusMutableLiveData == null)
         {
-            return new MutableLiveData<LoginStatus>(new LoginStatus(false,false));
+            return new MutableLiveData<LoginStatus>(new LoginStatus(1,1));
         }
         return loginFormStatusMutableLiveData;
     }

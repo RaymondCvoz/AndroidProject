@@ -6,6 +6,11 @@ public class LoginStatus
     private Integer passwordErr;
 
 
+    LoginStatus(Integer usernameErr,Integer passwordErr)
+    {
+        this.usernameErr = usernameErr;
+        this.passwordErr = passwordErr;
+    }
     public Integer checkUsername(String username)
     {
         if(username.length() < 5)
