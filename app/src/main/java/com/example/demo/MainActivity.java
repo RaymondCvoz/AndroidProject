@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -29,6 +30,17 @@ public class MainActivity extends AppCompatActivity
         setContentView(view);
 
         model = new ViewModelProvider(this).get(MainActivityModel.class);
+        model.getCurrentStatus().observe(this, new Observer<Integer>()
+        {
+            @Override
+            public void onChanged(Integer integer)
+            {
+                binding.enter.setEnabled(integer != 7);
+                binding.leave.setEnabled(integer != 0);
+            }
+        });
+
+
 
         binding.enter.setOnClickListener(new View.OnClickListener()
         {

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">agenda</string>
+    <string name="prompt_email">邮箱</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="action_sign_in">注册/登录</string>
+</resources>
