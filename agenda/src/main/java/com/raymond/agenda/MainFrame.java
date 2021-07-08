@@ -2,22 +2,14 @@ package com.raymond.agenda;
 
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.raymond.agenda.databinding.ActivityMainFrameBinding;
-import com.raymond.agenda.ui.event.Event;
-import com.raymond.agenda.ui.event.EventAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainFrame extends AppCompatActivity
 {
@@ -32,7 +24,6 @@ public class MainFrame extends AppCompatActivity
 
         binding = ActivityMainFrameBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

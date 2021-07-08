@@ -1,30 +1,29 @@
 package com.raymond.agenda.ui.event;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.raymond.agenda.R;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
 {
     private List<Event> eventList;
     private Context context;
-    public EventAdapter(List<Event> eventList,Context context)
+
+    public EventAdapter(List<Event> eventList, Context context)
     {
         this.eventList = eventList;
         this.context = context;
@@ -34,6 +33,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
     {
         TextView textView;
         Button button;
+
         public ViewHolder(@NonNull @NotNull View itemView)
         {
             super(itemView);
@@ -41,12 +41,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
             textView = itemView.findViewById(R.id.event_content_title);
         }
     }
+
     @NonNull
     @NotNull
     @Override
     public EventAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType)
     {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_per_line,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_per_line, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -55,12 +56,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
     public void onBindViewHolder(@NotNull @NonNull EventAdapter.ViewHolder holder, int position)
     {
         Event event = eventList.get(position);
-        if(event.getDone() == 1)
+        if (event.getDone() == 1)
         {
             holder.button.setText("已完成");
             holder.button.setEnabled(false);
         }
-        else holder.textView.setText("测试");
+        holder.textView.setText(eventList.get(position).getMessage());
         holder.button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -68,13 +69,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
             {
                 eventList.get(position).setDone(1);
                 SharedPreferences localEvent = context.getSharedPreferences("eventData", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = context.getSharedPreferences("eventData",Context.MODE_PRIVATE).edit();
-                Gson gson = new Gson();
-                String data = gson.toJson(eventList);
-                editor.putString("eventDataString",data);
-                editor.apply();
+                SharedPreferences.Editor editor = context.getSharedPreferences("eventData", Context.MODE_PRIVATE).edit();
+
                 holder.button.setText("已完成");
                 holder.button.setEnabled(false);
+
+                Gson gson = new Gson();
+                String data = gson.toJson(eventList);
+                editor.putString("eventDataString", data);
+                editor.apply();
+
             }
         });
     }

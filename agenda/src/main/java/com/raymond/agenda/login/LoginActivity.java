@@ -1,7 +1,5 @@
 package com.raymond.agenda.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.raymond.agenda.MainFrame;
 import com.raymond.agenda.databinding.ActivityLoginBinding;
 
@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity
 {
     private Verification verification;
     private ActivityLoginBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -76,18 +77,17 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                User user = new User(username.getText().toString(),password.getText().toString());
+                User user = new User(username.getText().toString(), password.getText().toString());
                 verification = new Verification(user);
-                if(verification.verify())
+                if (verification.verify())
                 {
                     Intent intent = new Intent(LoginActivity.this, MainFrame.class);
                     startActivity(intent);
                     //finish();
-                }
-                else
+                } else
                 {
                     Context context = getApplicationContext();
-                    Toast.makeText(context,"Invalid",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Invalid", Toast.LENGTH_SHORT).show();
                 }
             }
         });
