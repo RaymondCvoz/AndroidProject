@@ -1,0 +1,60 @@
+package com.raymond.agenda.ui.event;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.raymond.agenda.MainFrame;
+import com.raymond.agenda.databinding.ActivityTextEditBinding;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
+public class TextEdit extends AppCompatActivity
+{
+    private ActivityTextEditBinding binding;
+    private List<Event> eventList;
+    private int index;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        binding = ActivityTextEditBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        SharedPreferences localEvent = getSharedPreferences("eventData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = getSharedPreferences("eventData", Context.MODE_PRIVATE).edit();
+
+        Gson gson = new Gson();
+        String data = localEvent.getString("eventDataString", "");
+        Type listType = new TypeToken<List<Event>>()
+        {
+        }.getType();
+        if (gson.fromJson(data, listType) != null)
+        {
+            eventList = gson.fromJson(data, listType);
+        }
+
+        Intent intent = getIntent();
+        index = intent.getIntExtra("index",0);
+
+        binding.eventConfirm.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                eventList.get(index).setMessage(binding.editEvent.getText().toString());
+                String data = gson.toJson(eventList);
+                editor.putString("eventDataString", data);
+                editor.apply();
+                Intent intent1 = new Intent(TextEdit.this, MainFrame.class);
+                startActivity(intent1);
+            }
+        });
+    }
+}

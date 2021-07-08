@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Demo">
+        <activity android:name=".ui.event.TextEdit"></activity>
         <activity
             android:name=".MainFrame"
             android:label="@string/title_activity_main_frame" />

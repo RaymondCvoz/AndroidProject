@@ -1,6 +1,7 @@
 package com.raymond.agenda.ui.event;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,12 +43,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
         }
     }
 
+
     @NonNull
     @NotNull
     @Override
-    public EventAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType)
+    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType)
     {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_per_line, parent, false);
+        View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_per_line,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -78,7 +80,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
                 String data = gson.toJson(eventList);
                 editor.putString("eventDataString", data);
                 editor.apply();
-
+            }
+        });
+        holder.textView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(context,TextEdit.class);
+                intent.putExtra("index",position);
+                context.startActivity(intent);
             }
         });
     }

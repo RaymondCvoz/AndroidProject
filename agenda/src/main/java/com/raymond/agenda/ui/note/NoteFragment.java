@@ -17,27 +17,13 @@ import com.raymond.agenda.databinding.FragmentNoteBinding;
 public class NoteFragment extends Fragment
 {
 
-    private NoteViewModel noteViewModel;
     private FragmentNoteBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        noteViewModel =
-                new ViewModelProvider(this).get(NoteViewModel.class);
 
         binding = FragmentNoteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textDashboard;
-        noteViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>()
-        {
-            @Override
-            public void onChanged(@Nullable String s)
-            {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 

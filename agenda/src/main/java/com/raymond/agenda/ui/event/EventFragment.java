@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,40 +20,29 @@ import com.raymond.agenda.databinding.FragmentEventBinding;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class EventFragment extends Fragment
 {
 
-    private EventViewModel eventViewModel;
     private FragmentEventBinding binding;
     private List<Event> eventList = new ArrayList<>();
-    private Map<String, Event> eventMap = new HashMap<>();
     private FloatingActionButton floatingActionButton;
-    private Integer dataLength = 0;
 
     private void addToList(Event event)
     {
         eventList.add(event);
     }
 
-    private void addToMap(String key, Event event)
-    {
-        eventMap.put(key, event);
-    }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        eventViewModel =
-                new ViewModelProvider(this).get(EventViewModel.class);
 
         binding = FragmentEventBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //load local event data before loading page
         SharedPreferences localEvent = getActivity().getSharedPreferences("eventData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("eventData", Context.MODE_PRIVATE).edit();
         Gson gson = new Gson();
@@ -67,6 +55,8 @@ public class EventFragment extends Fragment
             eventList = gson.fromJson(data, listType);
         }
 
+
+        // remove finished event before loading page
         Iterator<Event> iterator = eventList.iterator();
         while(iterator.hasNext())
         {
@@ -76,13 +66,18 @@ public class EventFragment extends Fragment
                 iterator.remove();
             }
         }
+        data = gson.toJson(eventList);
+        editor.putString("eventDataString", data);
+        editor.apply();
 
+        //loading page
         RecyclerView eventRecyclerView = root.findViewById(R.id.event_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         eventRecyclerView.setLayoutManager(linearLayoutManager);
         EventAdapter eventAdapter = new EventAdapter(eventList, getContext());
         eventRecyclerView.setAdapter(eventAdapter);
 
+        //adding add button to page
         floatingActionButton = binding.addEvent;
         floatingActionButton.setOnClickListener(new View.OnClickListener()
         {
