@@ -1,6 +1,9 @@
 package com.raymond.agenda.ui.event;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +18,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.raymond.agenda.R;
 import com.raymond.agenda.databinding.FragmentEventBinding;
+import com.raymond.agenda.login.User;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EventFragment extends Fragment
 {
@@ -27,9 +36,20 @@ public class EventFragment extends Fragment
     private EventViewModel eventViewModel;
     private FragmentEventBinding binding;
     private List<Event> eventList = new ArrayList<>();
+    private Map<String,Event> eventMap = new HashMap<>();
     private FloatingActionButton floatingActionButton;
+    private Integer dataLength = 0;
 
-    private String filename = "eventFile";
+    private void addToList(Event event)
+    {
+        eventList.add(event);
+    }
+
+    private void addToMap(String key,Event event)
+    {
+        eventMap.put(key, event);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
@@ -39,23 +59,35 @@ public class EventFragment extends Fragment
         binding = FragmentEventBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        Event event1 = new Event();
-        Event event2 = new Event();
-        eventList.add(event1);
-        eventList.add(event2);
+        SharedPreferences localEvent = getActivity().getSharedPreferences("eventData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("eventData",Context.MODE_PRIVATE).edit();
+        Gson gson = new Gson();
+        String data = localEvent.getString("eventDataString","");
+        Type listType = new TypeToken<List<Event>>(){}.getType();
+        if(gson.fromJson(data,listType) != null)
+        {
+            eventList = gson.fromJson(data,listType);
+        }
+
         RecyclerView eventRecyclerView = root.findViewById(R.id.event_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         eventRecyclerView.setLayoutManager(linearLayoutManager);
-        EventAdapter eventAdapter = new EventAdapter(eventList);
+        EventAdapter eventAdapter = new EventAdapter(eventList,getContext());
         eventRecyclerView.setAdapter(eventAdapter);
 
-
+        floatingActionButton = binding.addEvent;
         floatingActionButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-
+                Event current = new Event("",0);
+                addToList(current);
+                String data = gson.toJson(eventList);
+                editor.putString("eventDataString",data);
+                editor.apply();
+                EventAdapter eventAdapter = new EventAdapter(eventList,getContext());
+                eventRecyclerView.setAdapter(eventAdapter);
             }
         });
 

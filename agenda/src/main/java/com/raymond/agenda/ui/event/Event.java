@@ -5,6 +5,12 @@ public class Event
     private String message;
     private Integer done;
 
+    public Event(String message,Integer done)
+    {
+        this.message = message;
+        this.done = done;
+    }
+
     public Integer getDone()
     {
         return done;

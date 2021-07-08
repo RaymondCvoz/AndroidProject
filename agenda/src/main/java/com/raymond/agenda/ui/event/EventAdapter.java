@@ -1,5 +1,8 @@
 package com.raymond.agenda.ui.event;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.raymond.agenda.R;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
 {
     private List<Event> eventList;
-
-    public EventAdapter(List<Event> eventList)
+    private Context context;
+    public EventAdapter(List<Event> eventList,Context context)
     {
         this.eventList = eventList;
+        this.context = context;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder
@@ -45,11 +52,31 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull EventAdapter.ViewHolder holder, int position)
+    public void onBindViewHolder(@NotNull @NonNull EventAdapter.ViewHolder holder, int position)
     {
         Event event = eventList.get(position);
-        holder.textView.setText("测试");
-
+        if(event.getDone() == 1)
+        {
+            holder.button.setText("已完成");
+            holder.button.setEnabled(false);
+        }
+        else holder.textView.setText("测试");
+        holder.button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                eventList.get(position).setDone(1);
+                SharedPreferences localEvent = context.getSharedPreferences("eventData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = context.getSharedPreferences("eventData",Context.MODE_PRIVATE).edit();
+                Gson gson = new Gson();
+                String data = gson.toJson(eventList);
+                editor.putString("eventDataString",data);
+                editor.apply();
+                holder.button.setText("已完成");
+                holder.button.setEnabled(false);
+            }
+        });
     }
 
     @Override
