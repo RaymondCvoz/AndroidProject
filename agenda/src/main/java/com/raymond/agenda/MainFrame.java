@@ -9,13 +9,21 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.raymond.agenda.databinding.ActivityMainFrameBinding;
+import com.raymond.agenda.ui.event.Event;
+import com.raymond.agenda.ui.event.EventAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainFrame extends AppCompatActivity
 {
 
     private ActivityMainFrameBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,6 +32,8 @@ public class MainFrame extends AppCompatActivity
 
         binding = ActivityMainFrameBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

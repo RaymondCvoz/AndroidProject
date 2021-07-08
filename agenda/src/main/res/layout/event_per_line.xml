@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:id="@+id/event_line_base">
+
+    <TextView
+        android:id="@+id/event_content_title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="测试文本"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_weight="3"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical" />
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/event_finish_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="test Button"
-        android:gravity="center"/>
+        android:layout_weight="1"
+        android:text="完成"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_margin="10dp"/>
 </LinearLayout>
