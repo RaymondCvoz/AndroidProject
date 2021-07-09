@@ -96,7 +96,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
             public void onClick(View v)
             {
                 String display  = eventList.get(position).getMessage();
-                Intent intent = new Intent(context,TextEdit.class);
+                Intent intent = new Intent(context,EventEdit.class);
                 intent.putExtra("index",position);
                 intent.putExtra("display",display);
                 context.startActivity(intent);

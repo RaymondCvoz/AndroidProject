@@ -11,14 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.raymond.agenda.MainFrame;
-import com.raymond.agenda.databinding.ActivityTextEditBinding;
+import com.raymond.agenda.databinding.ActivityEventEditBinding;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class TextEdit extends AppCompatActivity
+public class EventEdit extends AppCompatActivity
 {
-    private ActivityTextEditBinding binding;
+    private ActivityEventEditBinding binding;
     private List<Event> eventList;
     private int index;
     private String display;
@@ -26,7 +26,7 @@ public class TextEdit extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        binding = ActivityTextEditBinding.inflate(getLayoutInflater());
+        binding = ActivityEventEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SharedPreferences localEvent = getSharedPreferences("eventData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = localEvent.edit();
@@ -58,7 +58,7 @@ public class TextEdit extends AppCompatActivity
                 editor.apply();
 
 
-                Intent intent1 = new Intent(TextEdit.this, MainFrame.class);
+                Intent intent1 = new Intent(EventEdit.this, MainFrame.class);
                 startActivity(intent1);
             }
         });
