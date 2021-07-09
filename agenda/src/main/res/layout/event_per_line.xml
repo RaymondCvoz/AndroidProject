@@ -9,7 +9,7 @@
         android:id="@+id/event_content_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:text="测试文本"
+        android:hint="请输入事项"
         android:textStyle="bold"
         android:textSize="20sp"
         android:layout_weight="3"

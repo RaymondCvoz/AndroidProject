@@ -63,7 +63,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
             holder.button.setText("已完成");
             holder.button.setEnabled(false);
         }
-        holder.textView.setText(eventList.get(position).getMessage());
+
+        String display  = eventList.get(position).getMessage();
+
+        if(display.length() >= 10)
+        {
+            display = display.substring(0,9) + "...";
+        }
+        holder.textView.setText(display);
+
         holder.button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -71,7 +79,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
             {
                 eventList.get(position).setDone(1);
                 SharedPreferences localEvent = context.getSharedPreferences("eventData", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = context.getSharedPreferences("eventData", Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = localEvent.edit();
 
                 holder.button.setText("已完成");
                 holder.button.setEnabled(false);
@@ -87,8 +95,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder>
             @Override
             public void onClick(View v)
             {
+                String display  = eventList.get(position).getMessage();
                 Intent intent = new Intent(context,TextEdit.class);
                 intent.putExtra("index",position);
+                intent.putExtra("display",display);
                 context.startActivity(intent);
             }
         });

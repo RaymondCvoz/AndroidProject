@@ -84,7 +84,7 @@ public class EventFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Event current = new Event("点击添加文本", 0);
+                Event current = new Event("", 0);
                 addToList(current);
                 String data = gson.toJson(eventList);
                 editor.putString("eventDataString", data);
