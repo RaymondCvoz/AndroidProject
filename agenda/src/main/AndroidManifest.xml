@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Demo">
-        <activity android:name=".ui.note.NoteEdit"></activity>
+        <service
+            android:name=".ui.timer.TimerService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".ui.note.NoteEdit" />
         <activity android:name=".ui.event.EventEdit" />
         <activity
             android:name=".MainFrame"
