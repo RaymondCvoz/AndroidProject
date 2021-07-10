@@ -32,12 +32,16 @@ public class TimerFragment extends Fragment
     private int secondLeft;
     private Handler mHandler = new Handler(Looper.getMainLooper())
     {
+        @SuppressLint("SetTextI18n")
         @Override
         public void handleMessage(Message msg)
         {
-            if(msg.equals(1))
+            super.handleMessage(msg);
+            switch (msg.what)
             {
-                binding.secondsLeft.setText(secondLeft);
+                case 0:
+                        binding = FragmentTimerBinding.inflate(getLayoutInflater());
+                        binding.secondsLeft.setText(secondLeft + "");
             }
         }
     };
