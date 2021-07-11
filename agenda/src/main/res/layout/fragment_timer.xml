@@ -6,16 +6,16 @@
 
     <EditText
         android:id="@+id/timerEvent"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
+        android:layout_width="354dp"
+        android:layout_height="47dp"
+        android:hint="事件"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.087"
-        android:hint="事件"/>
+        app:layout_constraintVertical_bias="0.131" />
 
     <EditText
         android:id="@+id/inputHours"
@@ -81,10 +81,21 @@
         app:layout_constraintVertical_bias="0.648" />
 
     <TextView
-        android:id="@+id/hoursLeft"
+        android:id="@+id/remainHint"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:hint="剩余小时"
+        android:hint="剩余时间"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/inputHours"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/inputHours"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/hoursLeft"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:hint="时"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/inputHours"
@@ -94,26 +105,25 @@
 
     <TextView
         android:id="@+id/minutesLeft"
-        android:layout_width="100dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:hint="剩余分钟"
+        android:hint="分"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/inputMinutes"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/inputMinutes"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/secondsLeft"
-        android:layout_width="100dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:hint="剩余秒"
+        android:hint="秒"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/inputSeconds"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/inputSeconds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.618"
+        app:layout_constraintStart_toEndOf="@+id/minutesLeft"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

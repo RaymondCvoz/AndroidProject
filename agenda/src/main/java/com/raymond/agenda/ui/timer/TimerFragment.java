@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SyncAdapterType;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -30,21 +31,6 @@ public class TimerFragment extends Fragment
     private TimerService.TimerBinder timerBinder;
     private Timer timer;
     private int secondLeft;
-    private Handler mHandler = new Handler(Looper.getMainLooper())
-    {
-        @SuppressLint("SetTextI18n")
-        @Override
-        public void handleMessage(Message msg)
-        {
-            super.handleMessage(msg);
-            switch (msg.what)
-            {
-                case 0:
-                        binding = FragmentTimerBinding.inflate(getLayoutInflater());
-                        binding.secondsLeft.setText(secondLeft + "");
-            }
-        }
-    };
 
     private ServiceConnection serviceConnection = new ServiceConnection()
     {
@@ -97,9 +83,7 @@ public class TimerFragment extends Fragment
                 if (bindStatus == 1)
                 {
                     secondLeft = timerBinder.getRemaining();
-                    Message message = new Message();
-                    message.what = 1;
-                    mHandler.handleMessage(message);
+                    binding.secondsLeft.setText(secondLeft + "");
                 }
             }
         };
