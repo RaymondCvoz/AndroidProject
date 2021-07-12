@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -58,6 +59,8 @@ public class TimerFragment extends Fragment
     {
         binding = FragmentTimerBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("timerData",Context.MODE_PRIVATE);
+        binding.timerEvent.setText(sharedPreferences.getString("note",""));
         return root;
     }
 
@@ -106,6 +109,11 @@ public class TimerFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("timerData",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("note",binding.timerEvent.getText().toString());
+                editor.apply();
+
                 String hourS = binding.inputHours.getText().toString();
                 if(hourS.equals(""))
                 {
