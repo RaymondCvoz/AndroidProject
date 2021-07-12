@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -39,6 +40,8 @@ public class TimerService extends Service
             return TimerService.this;
         }
     }
+
+
 
     @Override
     public IBinder onBind(Intent intent)
@@ -85,10 +88,12 @@ public class TimerService extends Service
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("timerData",MODE_PRIVATE);
+        String display = sharedPreferences.getString("note","");
 
         builder.setSmallIcon(R.drawable.ic_dashboard_black_24dp)
                 .setContentTitle("定时事件")
-                .setContentText("时间到了")
+                .setContentText(display)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true).build();
 

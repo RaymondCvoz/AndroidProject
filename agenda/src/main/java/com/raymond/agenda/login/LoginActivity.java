@@ -3,6 +3,7 @@ package com.raymond.agenda.login;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.raymond.agenda.MainFrame;
 import com.raymond.agenda.databinding.ActivityLoginBinding;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -31,58 +38,42 @@ public class LoginActivity extends AppCompatActivity
         EditText username = binding.username;
         EditText password = binding.password;
         Button login = binding.login;
-        login.setEnabled(false);
-
-        username.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-
-            }
-        });
-        password.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-
-            }
-        });
         login.setEnabled(true);
+
+
+
+
         login.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                User user = new User(username.getText().toString(), password.getText().toString());
-                SharedPreferences sharedPreferences = getSharedPreferences("userData",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                Intent intent = new Intent(LoginActivity.this,MainFrame.class);
-                startActivity(intent);
+                String uname = username.getText().toString();
+                String pwd = password.getText().toString();
+                if(uname.equals(""))
+                    Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
+                else if(pwd.equals(""))
+                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
+                else
+                {
+                    LoginTask loginTask = (LoginTask) new LoginTask(new LoginTask.AsyncResponse()
+                    {
+                        @Override
+                        public void processFinished(Boolean output)
+                        {
+                            System.out.println(output);
+                            if(output)
+                            {
+                                Intent intent = new Intent(LoginActivity.this,MainFrame.class);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }).execute(uname,pwd);
+                }
             }
         });
     }
