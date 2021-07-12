@@ -2,6 +2,7 @@ package com.raymond.agenda.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,7 +18,6 @@ import com.raymond.agenda.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity
 {
-    private Verification verification;
     private ActivityLoginBinding binding;
 
     @Override
@@ -78,17 +78,11 @@ public class LoginActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 User user = new User(username.getText().toString(), password.getText().toString());
-                verification = new Verification(user);
-                if (verification.verify())
-                {
-                    Intent intent = new Intent(LoginActivity.this, MainFrame.class);
-                    startActivity(intent);
-                    //finish();
-                } else
-                {
-                    Context context = getApplicationContext();
-                    Toast.makeText(context, "Invalid", Toast.LENGTH_SHORT).show();
-                }
+                SharedPreferences sharedPreferences = getSharedPreferences("userData",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                Intent intent = new Intent(LoginActivity.this,MainFrame.class);
+                startActivity(intent);
             }
         });
     }

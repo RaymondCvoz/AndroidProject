@@ -82,9 +82,18 @@ public class TimerFragment extends Fragment
                 remain -= minute * 60;
                 int second = remain;
 
-                binding.hoursLeft.setText(hour + "");
-                binding.minutesLeft.setText(minute + "");
-                binding.secondsLeft.setText(second + "");
+                if(hour / 10 == 0)
+                    binding.hoursLeft.setText("0" + hour + "");
+                else
+                    binding.hoursLeft.setText(hour + "");
+                if(minute / 10 == 0)
+                    binding.minutesLeft.setText("0" + minute + "");
+                else
+                    binding.minutesLeft.setText(minute + "");
+                if(second / 10 == 0)
+                    binding.secondsLeft.setText("0" + second + "");
+                else
+                    binding.secondsLeft.setText(second + "");
 
                 handler.postDelayed(this,1000);
             }
