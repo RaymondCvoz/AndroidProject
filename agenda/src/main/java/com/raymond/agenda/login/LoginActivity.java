@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity
                             }
                             else
                             {
-                                Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"用户名已存在或密码错误",Toast.LENGTH_SHORT).show();
                             }
                         }
                     }).execute(uname,pwd);

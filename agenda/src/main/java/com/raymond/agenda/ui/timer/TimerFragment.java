@@ -61,6 +61,7 @@ public class TimerFragment extends Fragment
         View root = binding.getRoot();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("timerData",Context.MODE_PRIVATE);
         binding.timerEvent.setText(sharedPreferences.getString("note",""));
+        binding.timerStop.setEnabled(false);
         return root;
     }
 
@@ -78,6 +79,7 @@ public class TimerFragment extends Fragment
             public void run()
             {
                 int remain = timerService.getRemaining();
+                if(remain > 0) binding.timerStop.setEnabled(true);
 
                 int hour = remain / 3600;
                 remain -= hour * 3600;
