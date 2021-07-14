@@ -95,6 +95,7 @@ public class TimerService extends Service
                 .setContentTitle("定时事件")
                 .setContentText(display)
                 .setContentIntent(pendingIntent)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(true).build();
 
         notificationManager.notify(1, builder.build());

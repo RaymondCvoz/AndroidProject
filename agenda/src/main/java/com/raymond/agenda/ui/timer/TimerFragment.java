@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,19 @@ public class TimerFragment extends Fragment
     boolean mBound = false;
 
     private FragmentTimerBinding binding;
+
+
+    boolean StringValid(String test)
+    {
+        for(int i = 0;i < test.length();i++)
+        {
+            if(!Character.isDigit(test.charAt(i)))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     int calcRemain()
     {
@@ -132,17 +146,23 @@ public class TimerFragment extends Fragment
                     secondS = "0";
                 }
 
-
-                int hour = Integer.parseInt(hourS);
-                int minute = Integer.parseInt(minuteS);
-                int second = Integer.parseInt(secondS);
-
-                if(mBound)
+                if(StringValid(hourS) && StringValid(minuteS) && StringValid(secondS))
                 {
-                    timerService.setRemaining(hour * 3600 + minute * 60 + second);
-                    timerService.beginCount();
-                    binding.timerStart.setEnabled(false);
-                    binding.timerStop.setEnabled(true);
+                    int hour = Integer.parseInt(hourS);
+                    int minute = Integer.parseInt(minuteS);
+                    int second = Integer.parseInt(secondS);
+
+                    if(mBound)
+                    {
+                        timerService.setRemaining(hour * 3600 + minute * 60 + second);
+                        timerService.beginCount();
+                        binding.timerStart.setEnabled(false);
+                        binding.timerStop.setEnabled(true);
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"输入不合法",Toast.LENGTH_SHORT).show();
                 }
             }
         });

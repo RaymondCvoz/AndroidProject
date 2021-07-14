@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+ 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -39,9 +39,6 @@ public class LoginActivity extends AppCompatActivity
         EditText password = binding.password;
         Button login = binding.login;
         login.setEnabled(true);
-
-
-
 
         login.setOnClickListener(new View.OnClickListener()
         {
